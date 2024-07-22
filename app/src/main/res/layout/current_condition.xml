@@ -1,0 +1,139 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_temperature_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nhiệt độ"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/text_temperature_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_temperature_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="79°"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_realfeel_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="RealFeel"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/text_realfeel_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_temperature_label" />
+
+    <TextView
+        android:id="@+id/text_realfeel_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="85°"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_temperature_value" />
+
+    <TextView
+        android:id="@+id/text_wind_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Gió"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/text_wind_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_realfeel_label" />
+
+    <TextView
+        android:id="@+id/text_wind_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N 6 mi/h"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_realfeel_value" />
+
+    <TextView
+        android:id="@+id/text_windgust_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Gió giật tối đa"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/text_windgust_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_wind_label" />
+
+    <TextView
+        android:id="@+id/text_windgust_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9 mi/h"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_wind_value" />
+
+    <TextView
+        android:id="@+id/text_humidity_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Độ ẩm"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/text_humidity_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_windgust_label" />
+
+    <TextView
+        android:id="@+id/text_humidity_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="96%"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_windgust_value" />
+
+    <TextView
+        android:id="@+id/text_indoor_humidity_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Độ ẩm trong nhà"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/text_indoor_humidity_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_humidity_label" />
+
+    <TextView
+        android:id="@+id/text_indoor_humidity_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="95%"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_humidity_value" />
+
+    <TextView
+        android:id="@+id/text_indoor_humidity_note"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="(Ẩm ướt đến mức nguy hiểm)"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_indoor_humidity_value" />
+
+    <Button
+        android:id="@+id/button_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xem thêm"
+        app:layout_constraintTop_toBottomOf="@+id/text_indoor_humidity_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
