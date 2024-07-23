@@ -12,13 +12,9 @@ class ChildAdapter(private val ViewType : Int  , private val CurrentConditionLis
     inner class CurrentConditionHolder(private val binding: CurrentConditionBinding):
             RecyclerView.ViewHolder(binding.root){
                 fun bindCurrentCondition(CurrentItem: CurrentCondition){
-                    val Value = "${CurrentItem.Temperature.Metric.Value} + ${CurrentItem.Temperature.Metric.Unit}"
-                    binding.textTemperatureValue.text =Value
-//                    binding.textRealfeelValue =
-//                    binding.textWindValue
-//                    binding.textWindgustValue
-//                    binding.textHumidityValue
-//                    binding.textIndoorHumidityValue
+                  binding.textLabel.text = CurrentItem.Label
+                    binding.textValue.text = CurrentItem.Value
+                    binding.textUnit.text = CurrentItem.Unit
                 }
             }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -35,11 +31,19 @@ class ChildAdapter(private val ViewType : Int  , private val CurrentConditionLis
     }
 
     override fun getItemCount(): Int {
-      return 1
+      return CurrentConditionList.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return ViewType
+    }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        when(holder){
+            is CurrentConditionHolder ->{
+                holder.bindCurrentCondition(CurrentConditionList[position])
+            }
+        }
+
     }
 
 

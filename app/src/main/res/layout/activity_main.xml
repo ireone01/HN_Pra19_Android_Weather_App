@@ -37,7 +37,7 @@
     <!--    phan than -->
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/mainRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/tvStatus"
