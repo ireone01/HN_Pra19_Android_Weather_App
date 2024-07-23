@@ -12,13 +12,6 @@ data class Data(val ViewType : Int) {
 }
 
 
-data class TemperatureUnit(
-    val Label : String ,
-    val Value: Double,
-    val Unit: String,
-)
-
-
 
 data class CurrentCondition(
     val Label : String ,

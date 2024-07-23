@@ -8,6 +8,8 @@ import com.example.android_template.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding :ActivityMainBinding
     private lateinit var mList :ArrayList<Data>
+    private val ApiKey ="SC8yMrpOtTb4IJA2MFxXHzlvrVMAxcNy"
+    private lateinit var LocationKey : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -16,19 +18,19 @@ class MainActivity : AppCompatActivity() {
         binding.mainRecyclerView.setHasFixedSize(true)
         binding.mainRecyclerView.layoutManager =LinearLayoutManager(this)
         mList = ArrayList()
-        prepareData()
-        val adapter =MainAdapter(mList)
-        binding.mainRecyclerView.adapter =adapter
+
+        LocationKey ="353412"
+        var ApiUrl = "https://dataservice.accuweather.com/currentconditions/v1/$LocationKey?apikey=$ApiKey&details=true"
+
+        fetchWeatherData(ApiUrl) { currentConditions ->
+            runOnUiThread {
+                mList.addAll(listOf(Data(DataType.CURRENT_CONDITION, currentConditions)))
+                val adapter = MainAdapter(mList)
+                binding.mainRecyclerView.adapter = adapter
+            }
+        }
+
 
     }
-    private fun prepareData(){
-        var currentcondition  = ArrayList<CurrentCondition>()
-        currentcondition.add(CurrentCondition("Temperature", "28.9", "C"))
-        currentcondition.add(CurrentCondition("RealFeel", "33.6", "C"))
-        currentcondition.add(CurrentCondition("Wind", "12.8", "km/h"))
-        currentcondition.add(CurrentCondition("Wind Gust", "21.4", "km/h"))
-        currentcondition.add(CurrentCondition("Humidity", "80", "%"))
-        currentcondition.add(CurrentCondition("Indoor Humidity", "80", "%"))
-        mList.add(Data(DataType.CURRENT_CONDITION,currentcondition))
-    }
+
 }
