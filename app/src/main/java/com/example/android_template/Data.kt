@@ -1,22 +1,22 @@
 package com.example.android_template
 
-import android.view.View
 
-data class Data(val ViewType : Int) {
-
-    var  CurrentConditionList : List<CurrentCondition>? = null
-
-    constructor(ViewType: Int , CurrentConditionList : List<CurrentCondition>): this(ViewType){
-        this.CurrentConditionList =CurrentConditionList
-    }
+sealed class Data {
+    data class CurrentConditionData(val currentConditionList: List<CurrentCondition>) : Data()
+    data class SunMoonData(val sunMoonList: List<SunMoon>) : Data()
 }
 
-
-
 data class CurrentCondition(
-    val Label : String ,
+    val Label: String,
     val Value: String,
-    val Unit: String,
+    val Unit: String
+)
+
+data class SunMoon(
+    val Sun_or_Moon : String,
+    val Rise: String,
+    val Set: String,
+
 )
 
 // SC8yMrpOtTb4IJA2MFxXHzlvrVMAxcNy

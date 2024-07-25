@@ -17,9 +17,12 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                         RecyclerView.VERTICAL,false)
 
                 }
-
                 fun bindCurrentCondition(recyclerList : List<CurrentCondition>){
-                    val adapter = ChildAdapter(DataType.CURRENT_CONDITION,recyclerList)
+                    val adapter = ChildAdapter(DataType.CURRENT_CONDITION, CurrentConditionList = recyclerList)
+                    binding.childRecyclerView.adapter =adapter
+                }
+                fun bindSunMoon(sunmoonlist : List<SunMoon>){
+                    val adapter  = ChildAdapter(DataType.SUN_MOON_TYPE, SunMoonList = sunmoonlist)
                     binding.childRecyclerView.adapter =adapter
                 }
             }
@@ -38,12 +41,28 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         return weather.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-     when(holder){
-            is ACurrentConditionHolder ->{
-                weather[position].CurrentConditionList?.let { holder.bindCurrentCondition(it) }
-            }
-     }
+    override fun getItemViewType(position: Int): Int {
+        return when(weather[position]){
+                    is Data.CurrentConditionData-> DataType.CURRENT_CONDITION
+                    is Data.SunMoonData -> DataType.SUN_MOON_TYPE
+        }
     }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val data = weather[position]
+        when (data) {
+            is Data.CurrentConditionData -> {
+                if (holder is ACurrentConditionHolder) {
+                    holder.bindCurrentCondition(data.currentConditionList)
+                }
+            }
+            is Data.SunMoonData -> {
+                if (holder is ACurrentConditionHolder) {
+                    holder.bindSunMoon(data.sunMoonList)
+                }
+            }
+        }
+    }
+
+
 
 }
