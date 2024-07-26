@@ -1,20 +1,20 @@
-package com.example.android_template
+package com.example.android_template.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.android_template.Fragment.NavigationFragment
+import com.example.android_template.R
 
-class HourlyActivity : Fragment(){
+class RadaFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_hour,container,false)
+        return inflater.inflate(R.layout.activity_rada,container,false)
     }
+
 }

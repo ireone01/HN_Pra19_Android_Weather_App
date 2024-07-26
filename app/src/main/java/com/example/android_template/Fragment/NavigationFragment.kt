@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.android_template.DailyActivity
-import com.example.android_template.HourlyActivity
 import com.example.android_template.R
-import com.example.android_template.RadaActivity
 import com.example.android_template.databinding.FragmentNavigationBinding
 
 class NavigationFragment : Fragment() {
@@ -28,13 +25,13 @@ class NavigationFragment : Fragment() {
             navigateToFragment(HomeFragment())
         }
         binding.btnHourly.setOnClickListener {
-            navigateToFragment(HourlyActivity())
+            navigateToFragment(HourlyFragment())
         }
         binding.btnDaily.setOnClickListener {
-            navigateToFragment(DailyActivity())
+            navigateToFragment(DailyFragment())
         }
         binding.btnRadar.setOnClickListener {
-            navigateToFragment(RadaActivity())
+            navigateToFragment(RadaFragment())
         }
     }
 

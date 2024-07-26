@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_template.*
 import com.example.android_template.databinding.HomeFragmentBinding
-import kotlinx.coroutines.*
 
 class HomeFragment : Fragment() {
     private lateinit var binding: HomeFragmentBinding
@@ -26,6 +26,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         binding.mainRecyclerView.setHasFixedSize(true)
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -64,6 +65,21 @@ class HomeFragment : Fragment() {
         val sunmoon = ArrayList<SunMoon>()
         sunmoon.add(SunMoon("Sun", "2024-07-25T05:28:00+07:00", "2024-07-25T18:39:00+07:00"))
         sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
+        sunmoon.add(SunMoon("Sun", "2024-07-25T05:28:00+07:00", "2024-07-25T18:39:00+07:00"))
+        sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
+
+        sunmoon.add(SunMoon("Sun", "2024-07-25T05:28:00+07:00", "2024-07-25T18:39:00+07:00"))
+        sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
+
+        sunmoon.add(SunMoon("Sun", "2024-07-25T05:28:00+07:00", "2024-07-25T18:39:00+07:00"))
+        sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
+
+        sunmoon.add(SunMoon("Sun", "2024-07-25T05:28:00+07:00", "2024-07-25T18:39:00+07:00"))
+        sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
+
+        sunmoon.add(SunMoon("Sun", "2024-07-25T05:28:00+07:00", "2024-07-25T18:39:00+07:00"))
+        sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
+
 
         mList.add(Data.CurrentConditionData(currentcondition))
         mList.add(Data.SunMoonData(sunmoon))
