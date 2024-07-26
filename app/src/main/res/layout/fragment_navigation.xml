@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@android:color/darker_gray"
+    android:padding="5dp">
+
+    <Button
+        android:id="@+id/btn_today"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Hôm nay"
+        android:drawableTop="@drawable/baseline_calendar_today_24"
+        android:textSize="8sp"
+        android:layout_marginEnd="3dp"/>
+
+    <Button
+        android:id="@+id/btn_hourly"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Theo giờ"
+        android:drawableTop="@drawable/baseline_watch_later_24"
+        android:textSize="8sp"
+        android:layout_marginEnd="3dp"/>
+
+    <Button
+        android:id="@+id/btn_daily"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Hằng ngày"
+        android:drawableTop="@drawable/baseline_calendar_month_24"
+        android:textSize="8sp"
+        android:layout_marginEnd="3dp"/>
+
+    <Button
+        android:id="@+id/btn_radar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Ra-đa"
+        android:drawableTop="@drawable/baseline_radar_24"
+        android:textSize="8sp"/>
+</LinearLayout>

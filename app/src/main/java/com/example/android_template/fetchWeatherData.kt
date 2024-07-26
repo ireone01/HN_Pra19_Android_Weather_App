@@ -109,7 +109,7 @@ suspend fun fetSunMoon(apiUrl: String ) : List<SunMoon>  = withContext(Dispatche
                                 val MoonRise = Moon.get("Rise").asString
                                 val MoonSet = Moon.get("Set").asString
 
-                                return@withContext listOf(SunMoon("Sun",SunRise,SunSet), SunMoon("Moon",MoonRise,MoonSet),SunMoon("Sun",SunRise,SunSet))
+                                return@withContext listOf(SunMoon("Sun",SunRise,SunSet), SunMoon("Moon",MoonRise,MoonSet))
                         }
                 }
         }

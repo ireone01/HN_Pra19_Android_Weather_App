@@ -20,10 +20,12 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                 fun bindCurrentCondition(recyclerList : List<CurrentCondition>){
                     val adapter = ChildAdapter(DataType.CURRENT_CONDITION, CurrentConditionList = recyclerList)
                     binding.childRecyclerView.adapter =adapter
+                    binding.textA.text="Điều Kiện Hiện Tại"
                 }
                 fun bindSunMoon(sunmoonlist : List<SunMoon>){
                     val adapter  = ChildAdapter(DataType.SUN_MOON_TYPE, SunMoonList = sunmoonlist)
                     binding.childRecyclerView.adapter =adapter
+                    binding.textA.text="Mặt Trời & Mặt Trăng"
                 }
             }
 

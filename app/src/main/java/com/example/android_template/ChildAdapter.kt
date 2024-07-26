@@ -41,7 +41,7 @@ class ChildAdapter(private val ViewType : Int
                         binding.imgMoon.setImageResource(R.drawable.moon)
                         binding.tvmoon.text = calculateHour("Moon",rise,set)
                         binding.mtv2moon.text = "Mọc : $rise"
-                        binding.mtv3moon.text = "Lặn : $set (ngay hom sau)"
+                        binding.mtv3moon.text = "Lặn : $set"
                     }
 
 
