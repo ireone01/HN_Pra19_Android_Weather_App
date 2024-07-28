@@ -7,10 +7,6 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import java.io.IOException
 
 suspend fun fetchWeatherData(apiUrl: String): List<CurrentCondition> = withContext(Dispatchers.IO) {
         val client = OkHttpClient()
@@ -114,4 +110,29 @@ suspend fun fetSunMoon(apiUrl: String ) : List<SunMoon>  = withContext(Dispatche
                 }
         }
         return@withContext emptyList<SunMoon>()
+}
+suspend fun fetchForecastHour(apiUrl: String): List<ForecastHour> = withContext(Dispatchers.IO) {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(apiUrl).build()
+        val response = client.newCall(request).execute()
+        if (response.isSuccessful) {
+                val responseBody = response.body?.string()
+                if (responseBody != null) {
+                        val gson = Gson()
+                        val listType = object : TypeToken<List<JsonObject>>() {}.type
+                        val jsonArray: List<JsonObject> = gson.fromJson(responseBody, listType)
+                        if (jsonArray.isNotEmpty()) {
+                                val forecastList = mutableListOf<ForecastHour>()
+                                for (jsonObject in jsonArray) {
+                                        val dateTime = jsonObject.get("DateTime").asString
+                                        val temperatureObject = jsonObject.getAsJsonObject("Temperature")
+                                        val temperature = temperatureObject.get("Value").asString
+                                        val precipitationProbability = jsonObject.get("PrecipitationProbability").asString
+                                        forecastList.add(ForecastHour(dateTime, temperature, precipitationProbability))
+                                }
+                                return@withContext forecastList
+                        }
+                }
+        }
+        return@withContext emptyList<ForecastHour>()
 }

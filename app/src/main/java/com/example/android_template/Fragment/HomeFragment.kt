@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_template.*
 import com.example.android_template.databinding.HomeFragmentBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private lateinit var binding: HomeFragmentBinding
@@ -32,25 +35,29 @@ class HomeFragment : Fragment() {
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(context)
         mList = ArrayList()
 
-        prepareData()
-        val adapter = MainAdapter(mList)
-        binding.mainRecyclerView.adapter = adapter
-//        LocationKey ="353412"
-//        var ApiUrl = "https://dataservice.accuweather.com/currentconditions/v1/$LocationKey?apikey=$ApiKey&details=true"
-//        var ApiSunMoon ="https://dataservice.accuweather.com/forecasts/v1/daily/1day/$LocationKey?apikey=$ApiKey&details=true"
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val currentCondition =async { fetchWeatherData(ApiUrl) }
-//            val sunMoon  = async { fetSunMoon(ApiSunMoon) }
-//            currentCondition.await().let {
-//                mList.add(Data.CurrentConditionData(it))
-//            }
-//            sunMoon.await().let {
-//                mList.add(Data.SunMoonData(it))
-//            }
-//            val adapter = MainAdapter(mList)
-//            binding.mainRecyclerView.adapter = adapter
-//        }
+//        prepareData()
+//        val adapter = MainAdapter(mList)
+//        binding.mainRecyclerView.adapter = adapter
+        LocationKey ="353412"
+        var ApiUrl = "https://dataservice.accuweather.com/currentconditions/v1/$LocationKey?apikey=$ApiKey&details=true"
+        var ApiSunMoon ="https://dataservice.accuweather.com/forecasts/v1/daily/1day/$LocationKey?apikey=$ApiKey&details=true"
+        var ApiForecast_hour = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/$LocationKey?apikey=$ApiKey&details=true"
+        CoroutineScope(Dispatchers.Main).launch {
+            val currentCondition =async { fetchWeatherData(ApiUrl) }
+            val sunMoon  = async { fetSunMoon(ApiSunMoon) }
+            val forecastHour = async { fetchForecastHour(ApiForecast_hour) }
+            currentCondition.await().let {
+                mList.add(Data.CurrentConditionData(it))
+            }
+            sunMoon.await().let {
+                mList.add(Data.SunMoonData(it))
+            }
+            forecastHour.await().let {
+                mList.add(Data.ForecastHourData(it))
+            }
+            val adapter = MainAdapter(mList)
+            binding.mainRecyclerView.adapter = adapter
+        }
     }
 
     private fun prepareData() {
@@ -80,9 +87,17 @@ class HomeFragment : Fragment() {
         sunmoon.add(SunMoon("Sun", "2024-07-25T05:28:00+07:00", "2024-07-25T18:39:00+07:00"))
         sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
 
+        val forecasthour = ArrayList<ForecastHour>()
+        forecasthour.add(ForecastHour("12","23","56"))
+        forecasthour.add(ForecastHour("23","23","56"))
+        forecasthour.add(ForecastHour("11","23","56"))
+        forecasthour.add(ForecastHour("3","23","56"))
+        forecasthour.add(ForecastHour("4","23","56"))
+        forecasthour.add(ForecastHour("7","23","56"))
 
         mList.add(Data.CurrentConditionData(currentcondition))
         mList.add(Data.SunMoonData(sunmoon))
+        mList.add(Data.ForecastHourData(forecasthour))
     }
 
 

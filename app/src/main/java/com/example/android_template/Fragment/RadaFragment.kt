@@ -14,7 +14,7 @@ class RadaFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_rada,container,false)
+        return inflater.inflate(R.layout.rada_fragment,container,false)
     }
 
 }

@@ -15,6 +15,6 @@ class DailyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_daily,container,false)
+        return inflater.inflate(R.layout.daily_fragment,container,false)
     }
 }

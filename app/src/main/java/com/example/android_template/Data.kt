@@ -4,6 +4,7 @@ package com.example.android_template
 sealed class Data {
     data class CurrentConditionData(val currentConditionList: List<CurrentCondition>) : Data()
     data class SunMoonData(val sunMoonList: List<SunMoon>) : Data()
+    data class ForecastHourData(val forecastHourList : List<ForecastHour>) : Data()
 }
 
 data class CurrentCondition(
@@ -17,6 +18,11 @@ data class SunMoon(
     val Rise: String,
     val Set: String,
 
+)
+data class ForecastHour(
+    val forecast_time : String,
+    val forecast_tem : String ,
+    val forecast_rain : String
 )
 
 // SC8yMrpOtTb4IJA2MFxXHzlvrVMAxcNy

@@ -14,6 +14,6 @@ class HourlyFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_hour,container,false)
+        return inflater.inflate(R.layout.hour_fragment,container,false)
     }
 }

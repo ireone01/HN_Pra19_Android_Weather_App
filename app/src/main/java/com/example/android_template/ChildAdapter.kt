@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.android_template.calculateDuration.Companion.calculateHour
+import com.example.android_template.calculateDuration.Companion.extractTime
 
 import com.example.android_template.databinding.CurrentConditionBinding
+import com.example.android_template.databinding.ForecastHourBinding
 import com.example.android_template.databinding.SunMoonBinding
 
 class ChildAdapter(private val ViewType : Int
         , private val CurrentConditionList : List<CurrentCondition> = listOf()
         ,private val SunMoonList : List<SunMoon> = listOf()
+        ,private val ForecastHourList : List<ForecastHour> = listOf()
 )
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -47,6 +49,23 @@ class ChildAdapter(private val ViewType : Int
 
                 }
             }
+    inner class ForecastHourHolder(private val binding: ForecastHourBinding):
+            RecyclerView.ViewHolder(binding.root){
+                @RequiresApi(Build.VERSION_CODES.O)
+                fun bindForecastHour(ForeHourItem: ForecastHour){
+                    if(ForeHourItem.forecast_rain.toInt()>50) {
+                        binding.forecastImg.setImageResource(R.drawable.rain)
+                        binding.forecastHour.text = extractTime( ForeHourItem.forecast_time)
+                        binding.forecastT.text = fahrenheitToCelsius(ForeHourItem.forecast_tem.toDouble())+ "°C"
+                        binding.forecastRain.text = ForeHourItem.forecast_rain + "%"
+                    }else{
+                        binding.forecastImg.setImageResource(R.drawable.cloud)
+                        binding.forecastHour.text = extractTime(ForeHourItem.forecast_time)
+                        binding.forecastT.text = fahrenheitToCelsius(ForeHourItem.forecast_tem.toDouble()) + "°C"
+                        binding.forecastRain.text = ForeHourItem.forecast_rain + "%"
+                    }
+                }
+            }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return   when(viewType) {
            DataType.CURRENT_CONDITION -> {
@@ -65,6 +84,13 @@ class ChildAdapter(private val ViewType : Int
                   )
                   return SunMoonHolder(binding)
            }
+            DataType.FORECAST_HOUR ->{
+                        val binding = ForecastHourBinding.inflate(
+                            LayoutInflater.from(parent.context),
+                            parent, false
+                        )
+                return ForecastHourHolder(binding)
+            }
             else ->throw IllegalArgumentException("Invalid view type")
        }
     }
@@ -76,6 +102,9 @@ class ChildAdapter(private val ViewType : Int
           }
           DataType.SUN_MOON_TYPE ->{
               SunMoonList.size
+          }
+          DataType.FORECAST_HOUR ->{
+              ForecastHourList.size
           }
           else -> throw IllegalArgumentException("Invalid view type")
       }
@@ -94,9 +123,15 @@ class ChildAdapter(private val ViewType : Int
                 println("Binding SunMoon at position $position: ${SunMoonList[position]}")
                 holder.bindSunMoon(SunMoonList[position])
             }
+            is ForecastHourHolder ->{
+                holder.bindForecastHour(ForecastHourList[position])
+            }
         }
 
     }
 
-
+    fun fahrenheitToCelsius(fahrenheit: Double): String {
+        val x = (fahrenheit - 32) * 5 / 9
+        return String.format("%.1f",x)
+    }
 }
