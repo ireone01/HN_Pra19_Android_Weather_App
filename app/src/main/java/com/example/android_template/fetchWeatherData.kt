@@ -1,5 +1,6 @@
 package com.example.android_template
 
+import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import com.google.gson.Gson
@@ -135,4 +136,36 @@ suspend fun fetchForecastHour(apiUrl: String): List<ForecastHour> = withContext(
                 }
         }
         return@withContext emptyList<ForecastHour>()
+}
+suspend fun fetchForecastDay(apiUrl: String): List<ForecastDay> = withContext(Dispatchers.IO) {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(apiUrl).build()
+        val response = client.newCall(request).execute()
+        if (response.isSuccessful) {
+                val responseBody = response.body?.string()
+                if (responseBody != null) {
+                        val gson = Gson()
+                        val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
+                        val dailyForecasts = jsonObject.getAsJsonArray("DailyForecasts")
+                        if (dailyForecasts != null && dailyForecasts.size() > 0) {
+                                val forecastList = mutableListOf<ForecastDay>()
+                                for (jsonElement in dailyForecasts) {
+                                        val forecastJson = jsonElement.asJsonObject
+
+                                        val dateDay = forecastJson.get("Date")
+
+                                        val temperature = forecastJson.getAsJsonObject("Temperature")
+                                        val minTemp = temperature.getAsJsonObject("Minimum")
+                                        val maxTemp = temperature.getAsJsonObject("Maximum")
+
+                                        val dayJson = forecastJson.getAsJsonObject("Day")
+                                        val precipitationProbability = dayJson?.get("PrecipitationProbability")
+
+                                        forecastList.add(ForecastDay(dateDay.asString, minTemp.asString, maxTemp.asString, precipitationProbability.toString()))
+                                }
+                                return@withContext forecastList
+                        }
+                }
+        }
+        return@withContext emptyList<ForecastDay>()
 }

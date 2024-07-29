@@ -33,6 +33,13 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                     binding.childRecyclerView.adapter = adapter
                     binding.textA.text = "Theo Giờ"
                 }
+                fun bindForecastDay(forecastDayList: List<ForecastDay>){
+                    binding.childRecyclerView.setHasFixedSize(true)
+                    binding.childRecyclerView.layoutManager = LinearLayoutManager(binding.root.context,RecyclerView.VERTICAL,false)
+                    val adapter = ChildAdapter(DataType.FORECAST_DAY, ForecastDayList = forecastDayList)
+                    binding.childRecyclerView.adapter = adapter
+                    binding.textA.text = "Theo Ngày"
+                }
             }
 
 
@@ -54,6 +61,7 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                     is Data.CurrentConditionData-> DataType.CURRENT_CONDITION
                     is Data.SunMoonData -> DataType.SUN_MOON_TYPE
                     is Data.ForecastHourData ->DataType.FORECAST_HOUR
+                    is Data.ForecastDayData -> DataType.FORECAST_DAY
         }
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -72,6 +80,11 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             is Data.ForecastHourData -> {
                 if(holder is ACurrentConditionHolder) {
                     holder.bindForecastHour(data.forecastHourList)
+                }
+            }
+            is Data.ForecastDayData ->{
+                if(holder is ACurrentConditionHolder){
+                    holder.bindForecastDay(data.forecastDayList)
                 }
             }
         }

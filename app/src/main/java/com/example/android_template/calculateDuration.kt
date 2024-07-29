@@ -37,5 +37,14 @@ class calculateDuration {
         fun extractTime(dateTime: String): String {
             return dateTime.substring(11, 19)
         }
+
+        fun extractDay(dateTime: String): String{
+            return dateTime.substring(5,10)
+        }
+
+        fun fahrenheitToCelsius(fahrenheit: Double): String {
+            val x = (fahrenheit - 32) * 5 / 9
+            return String.format("%.1f",x)
+        }
     }
 }

@@ -17,6 +17,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: HomeFragmentBinding
     private lateinit var mList: ArrayList<Data>
     private val ApiKey = "SC8yMrpOtTb4IJA2MFxXHzlvrVMAxcNy"
+    private val ApiOpenweather = "642d01a3e5247c272aff66837e11bf7e"
     private lateinit var LocationKey: String
 
     override fun onCreateView(
@@ -35,29 +36,34 @@ class HomeFragment : Fragment() {
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(context)
         mList = ArrayList()
 
-//        prepareData()
-//        val adapter = MainAdapter(mList)
-//        binding.mainRecyclerView.adapter = adapter
-        LocationKey ="353412"
-        var ApiUrl = "https://dataservice.accuweather.com/currentconditions/v1/$LocationKey?apikey=$ApiKey&details=true"
-        var ApiSunMoon ="https://dataservice.accuweather.com/forecasts/v1/daily/1day/$LocationKey?apikey=$ApiKey&details=true"
-        var ApiForecast_hour = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/$LocationKey?apikey=$ApiKey&details=true"
-        CoroutineScope(Dispatchers.Main).launch {
-            val currentCondition =async { fetchWeatherData(ApiUrl) }
-            val sunMoon  = async { fetSunMoon(ApiSunMoon) }
-            val forecastHour = async { fetchForecastHour(ApiForecast_hour) }
-            currentCondition.await().let {
-                mList.add(Data.CurrentConditionData(it))
-            }
-            sunMoon.await().let {
-                mList.add(Data.SunMoonData(it))
-            }
-            forecastHour.await().let {
-                mList.add(Data.ForecastHourData(it))
-            }
-            val adapter = MainAdapter(mList)
-            binding.mainRecyclerView.adapter = adapter
-        }
+        prepareData()
+        val adapter = MainAdapter(mList)
+        binding.mainRecyclerView.adapter = adapter
+//        LocationKey ="353412"
+//        var ApiUrl = "https://dataservice.accuweather.com/currentconditions/v1/$LocationKey?apikey=$ApiKey&details=true"
+//        var ApiSunMoon ="https://dataservice.accuweather.com/forecasts/v1/daily/1day/$LocationKey?apikey=$ApiKey&details=true"
+//        var ApiForecast_hour = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/$LocationKey?apikey=$ApiKey&details=true"
+//        var ApiForecast_day ="https://dataservice.accuweather.com/forecasts/v1/daily/5day/$LocationKey?apikey=$ApiKey=true"
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val currentCondition =async { fetchWeatherData(ApiUrl) }
+//            val sunMoon  = async { fetSunMoon(ApiSunMoon) }
+//            val forecastHour = async { fetchForecastHour(ApiForecast_hour) }
+//            val forecastDay = async { fetchForecastDay(ApiForecast_day) }
+//            currentCondition.await().let {
+//                mList.add(Data.CurrentConditionData(it))
+//            }
+//            sunMoon.await().let {
+//                mList.add(Data.SunMoonData(it))
+//            }
+//            forecastHour.await().let {
+//                mList.add(Data.ForecastHourData(it))
+//            }
+//            forecastDay.await().let {
+//                mList.add(Data.ForecastDayData(it))
+//            }
+//            val adapter = MainAdapter(mList)
+//            binding.mainRecyclerView.adapter = adapter
+//        }
     }
 
     private fun prepareData() {
@@ -88,16 +94,24 @@ class HomeFragment : Fragment() {
         sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
 
         val forecasthour = ArrayList<ForecastHour>()
-        forecasthour.add(ForecastHour("12","23","56"))
-        forecasthour.add(ForecastHour("23","23","56"))
-        forecasthour.add(ForecastHour("11","23","56"))
-        forecasthour.add(ForecastHour("3","23","56"))
-        forecasthour.add(ForecastHour("4","23","56"))
-        forecasthour.add(ForecastHour("7","23","56"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
 
+        val forecastday = ArrayList<ForecastDay>()
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
         mList.add(Data.CurrentConditionData(currentcondition))
         mList.add(Data.SunMoonData(sunmoon))
         mList.add(Data.ForecastHourData(forecasthour))
+        mList.add(Data.ForecastDayData(forecastday))
     }
 
 

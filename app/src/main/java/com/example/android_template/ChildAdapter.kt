@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_template.calculateDuration.Companion.calculateHour
+import com.example.android_template.calculateDuration.Companion.extractDay
 import com.example.android_template.calculateDuration.Companion.extractTime
+import com.example.android_template.calculateDuration.Companion.fahrenheitToCelsius
 
 import com.example.android_template.databinding.CurrentConditionBinding
+import com.example.android_template.databinding.ForecastDayBinding
 import com.example.android_template.databinding.ForecastHourBinding
 import com.example.android_template.databinding.SunMoonBinding
 
@@ -16,6 +19,7 @@ class ChildAdapter(private val ViewType : Int
         , private val CurrentConditionList : List<CurrentCondition> = listOf()
         ,private val SunMoonList : List<SunMoon> = listOf()
         ,private val ForecastHourList : List<ForecastHour> = listOf()
+        ,private val ForecastDayList : List<ForecastDay> = listOf()
 )
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -66,6 +70,17 @@ class ChildAdapter(private val ViewType : Int
                     }
                 }
             }
+    inner class ForecastDayHolder(private val binding : ForecastDayBinding):
+            RecyclerView.ViewHolder(binding.root){
+                @RequiresApi(Build.VERSION_CODES.O)
+                fun binForecastDay(ForeDayItem : ForecastDay){
+                    binding.tvDay.text = extractDay(ForeDayItem.day)
+                    binding.tvDay2.text = ForeDayItem.tem_max
+                    binding.tvDay3.text = ForeDayItem.tem_min
+                    binding.tvDay4.text = ForeDayItem.rain
+                }
+
+            }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return   when(viewType) {
            DataType.CURRENT_CONDITION -> {
@@ -91,6 +106,13 @@ class ChildAdapter(private val ViewType : Int
                         )
                 return ForecastHourHolder(binding)
             }
+            DataType.FORECAST_DAY ->{
+                        val binding = ForecastDayBinding.inflate(
+                            LayoutInflater.from(parent.context),
+                            parent,false
+                        )
+                return ForecastDayHolder(binding)
+            }
             else ->throw IllegalArgumentException("Invalid view type")
        }
     }
@@ -105,6 +127,9 @@ class ChildAdapter(private val ViewType : Int
           }
           DataType.FORECAST_HOUR ->{
               ForecastHourList.size
+          }
+          DataType.FORECAST_DAY ->{
+              ForecastDayList.size
           }
           else -> throw IllegalArgumentException("Invalid view type")
       }
@@ -126,12 +151,12 @@ class ChildAdapter(private val ViewType : Int
             is ForecastHourHolder ->{
                 holder.bindForecastHour(ForecastHourList[position])
             }
+            is ForecastDayHolder ->{
+                holder.binForecastDay(ForecastDayList[position])
+            }
         }
 
     }
 
-    fun fahrenheitToCelsius(fahrenheit: Double): String {
-        val x = (fahrenheit - 32) * 5 / 9
-        return String.format("%.1f",x)
-    }
+
 }
