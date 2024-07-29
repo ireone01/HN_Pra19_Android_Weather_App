@@ -6,6 +6,7 @@ sealed class Data {
     data class SunMoonData(val sunMoonList: List<SunMoon>) : Data()
     data class ForecastHourData(val forecastHourList : List<ForecastHour>) : Data()
     data class ForecastDayData(val forecastDayList: List<ForecastDay>) : Data()
+    data class HourlyFragmentData(val hourlyFragmentList : List<HourlyFragmentItem>) : Data()
 }
 
 data class CurrentCondition(
@@ -31,6 +32,13 @@ data class ForecastDay(
     val tem_min : String ,
     val tem_max : String ,
     val rain : String
+)
+data class HourlyFragmentItem(
+    val hour : String,
+    val tem : String ,
+    val rel_tem : String ,
+    val rain : String,
+    val day : String
 )
 // SC8yMrpOtTb4IJA2MFxXHzlvrVMAxcNy
 

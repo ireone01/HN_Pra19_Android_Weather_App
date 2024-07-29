@@ -8,10 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_template.*
 import com.example.android_template.databinding.HomeFragmentBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private lateinit var binding: HomeFragmentBinding
@@ -37,7 +33,7 @@ class HomeFragment : Fragment() {
         mList = ArrayList()
 
         prepareData()
-        val adapter = MainAdapter(mList)
+        val adapter = HomeAdapter(mList)
         binding.mainRecyclerView.adapter = adapter
 //        LocationKey ="353412"
 //        var ApiUrl = "https://dataservice.accuweather.com/currentconditions/v1/$LocationKey?apikey=$ApiKey&details=true"
@@ -94,20 +90,20 @@ class HomeFragment : Fragment() {
         sunmoon.add(SunMoon("moon", "2024-07-25T21:45:00+07:00", "2024-07-26T10:11:00+07:00"))
 
         val forecasthour = ArrayList<ForecastHour>()
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","12"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","45"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","45"))
         forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
         forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
-        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
-        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
-        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
-        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","56"))
+        forecasthour.add(ForecastHour("2024-07-25T21:45:00+07:00","23","12"))
 
         val forecastday = ArrayList<ForecastDay>()
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","12"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","43"))
         forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
         forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
-        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
-        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
-        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
-        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","56"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","12"))
+        forecastday.add(ForecastDay("2024-07-25T05:28:00+07:00","23","45","34"))
         mList.add(Data.CurrentConditionData(currentcondition))
         mList.add(Data.SunMoonData(sunmoon))
         mList.add(Data.ForecastHourData(forecasthour))

@@ -13,15 +13,19 @@ import com.example.android_template.calculateDuration.Companion.fahrenheitToCels
 import com.example.android_template.databinding.CurrentConditionBinding
 import com.example.android_template.databinding.ForecastDayBinding
 import com.example.android_template.databinding.ForecastHourBinding
+import com.example.android_template.databinding.HourFragmentBinding
+import com.example.android_template.databinding.HourFragmentItemBinding
 import com.example.android_template.databinding.SunMoonBinding
 
 class ChildAdapter(private val ViewType : Int
-        , private val CurrentConditionList : List<CurrentCondition> = listOf()
-        ,private val SunMoonList : List<SunMoon> = listOf()
-        ,private val ForecastHourList : List<ForecastHour> = listOf()
-        ,private val ForecastDayList : List<ForecastDay> = listOf()
+                   , private val CurrentConditionList : List<CurrentCondition> = listOf()
+                   , private val SunMoonList : List<SunMoon> = listOf()
+                   , private val ForecastHourList : List<ForecastHour> = listOf()
+                   , private val ForecastDayList : List<ForecastDay> = listOf()
+                    , private val HourlyFragmentList : List<HourlyFragmentItem> = listOf()
 )
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
 
     inner class CurrentConditionHolder(private val binding: CurrentConditionBinding):
             RecyclerView.ViewHolder(binding.root){
@@ -57,16 +61,25 @@ class ChildAdapter(private val ViewType : Int
             RecyclerView.ViewHolder(binding.root){
                 @RequiresApi(Build.VERSION_CODES.O)
                 fun bindForecastHour(ForeHourItem: ForecastHour){
-                    if(ForeHourItem.forecast_rain.toInt()>50) {
-                        binding.forecastImg.setImageResource(R.drawable.rain)
-                        binding.forecastHour.text = extractTime( ForeHourItem.forecast_time)
-                        binding.forecastT.text = fahrenheitToCelsius(ForeHourItem.forecast_tem.toDouble())+ "°C"
-                        binding.forecastRain.text = ForeHourItem.forecast_rain + "%"
-                    }else{
-                        binding.forecastImg.setImageResource(R.drawable.cloud)
-                        binding.forecastHour.text = extractTime(ForeHourItem.forecast_time)
-                        binding.forecastT.text = fahrenheitToCelsius(ForeHourItem.forecast_tem.toDouble()) + "°C"
-                        binding.forecastRain.text = ForeHourItem.forecast_rain + "%"
+                    when{
+                        ForeHourItem.forecast_rain.toInt() <30 -> {
+                            binding.forecastImg.setImageResource(R.drawable.sun)
+                            binding.forecastHour.text = extractTime( ForeHourItem.forecast_time)
+                            binding.forecastT.text = fahrenheitToCelsius(ForeHourItem.forecast_tem.toDouble())+ "°C"
+                            binding.forecastRain.text = ForeHourItem.forecast_rain + "%"
+                        }
+                        ForeHourItem.forecast_rain.toInt() <50 -> {
+                            binding.forecastImg.setImageResource(R.drawable.cloud)
+                            binding.forecastHour.text = extractTime( ForeHourItem.forecast_time)
+                            binding.forecastT.text = fahrenheitToCelsius(ForeHourItem.forecast_tem.toDouble())+ "°C"
+                            binding.forecastRain.text = ForeHourItem.forecast_rain + "%"
+                        }
+                        else -> {
+                            binding.forecastImg.setImageResource(R.drawable.rain)
+                            binding.forecastHour.text = extractTime(ForeHourItem.forecast_time)
+                            binding.forecastT.text = fahrenheitToCelsius(ForeHourItem.forecast_tem.toDouble()) + "°C"
+                            binding.forecastRain.text = ForeHourItem.forecast_rain + "%"
+                        }
                     }
                 }
             }
@@ -74,13 +87,62 @@ class ChildAdapter(private val ViewType : Int
             RecyclerView.ViewHolder(binding.root){
                 @RequiresApi(Build.VERSION_CODES.O)
                 fun binForecastDay(ForeDayItem : ForecastDay){
-                    binding.tvDay.text = extractDay(ForeDayItem.day)
-                    binding.tvDay2.text = ForeDayItem.tem_max
-                    binding.tvDay3.text = ForeDayItem.tem_min
-                    binding.tvDay4.text = ForeDayItem.rain
+                    when{
+                        ForeDayItem.rain.toInt() < 30 ->{
+                        binding.imgDay.setImageResource(R.drawable.sun)
+                        binding.tvDay.text = extractDay(ForeDayItem.day)
+                            binding.tvDay2.text = fahrenheitToCelsius(ForeDayItem.tem_max.toDouble()) + "°C"
+                            binding.tvDay3.text = fahrenheitToCelsius(ForeDayItem.tem_min.toDouble()) + "°C"
+                        binding.tvDay4.text = ForeDayItem.rain + "%"
+                        }
+                        (ForeDayItem.rain.toInt() <50) ->{
+                            binding.imgDay.setImageResource(R.drawable.cloud)
+                            binding.tvDay.text = extractDay(ForeDayItem.day)
+                            binding.tvDay2.text = fahrenheitToCelsius(ForeDayItem.tem_max.toDouble()) + "°C"
+                            binding.tvDay3.text = fahrenheitToCelsius(ForeDayItem.tem_min.toDouble()) + "°C"
+                            binding.tvDay4.text = ForeDayItem.rain + "%"
+                        }
+                        else -> {
+                            binding.imgDay.setImageResource(R.drawable.rain)
+                            binding.tvDay.text = extractDay(ForeDayItem.day)
+                            binding.tvDay2.text = fahrenheitToCelsius(ForeDayItem.tem_max.toDouble()) + "°C"
+                            binding.tvDay3.text = fahrenheitToCelsius(ForeDayItem.tem_min.toDouble()) + "°C"
+                            binding.tvDay4.text = ForeDayItem.rain + "%"
+                        }
+                    }
                 }
 
             }
+    inner class HourlyFragmentItemHolder(private val binding : HourFragmentItemBinding):
+        RecyclerView.ViewHolder(binding.root){
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun bindHourlyFragmentItem(HourlyFragItem : HourlyFragmentItem){
+            when{
+                HourlyFragItem.rain.toInt() < 30 ->{
+                    binding.imgDay.setImageResource(R.drawable.sun)
+                    binding.tvDay.text = extractTime(HourlyFragItem.hour).substring(0,5)
+                    binding.tvDay2.text = fahrenheitToCelsius(HourlyFragItem.tem.toDouble()) + "°C"
+                    binding.tvDay3.text = fahrenheitToCelsius(HourlyFragItem.rel_tem.toDouble()) + "°C"
+                    binding.tvDay4.text = HourlyFragItem.rain + "%"
+                }
+                (HourlyFragItem.rain.toInt() <50) ->{
+                    binding.imgDay.setImageResource(R.drawable.cloud)
+                    binding.tvDay.text = extractTime(HourlyFragItem.hour).substring(0,5)
+                    binding.tvDay2.text = fahrenheitToCelsius(HourlyFragItem.tem.toDouble()) + "°C"
+                    binding.tvDay3.text = fahrenheitToCelsius(HourlyFragItem.rel_tem.toDouble()) + "°C"
+                    binding.tvDay4.text = HourlyFragItem.rain + "%"
+                }
+                else -> {
+                    binding.imgDay.setImageResource(R.drawable.rain)
+                    binding.tvDay.text = extractTime(HourlyFragItem.hour).substring(0,5)
+                    binding.tvDay2.text = fahrenheitToCelsius(HourlyFragItem.tem.toDouble()) + "°C"
+                    binding.tvDay3.text = fahrenheitToCelsius(HourlyFragItem.rel_tem.toDouble()) + "°C"
+                    binding.tvDay4.text = HourlyFragItem.rain + "%"
+                }
+            }
+        }
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return   when(viewType) {
            DataType.CURRENT_CONDITION -> {
@@ -113,6 +175,13 @@ class ChildAdapter(private val ViewType : Int
                         )
                 return ForecastDayHolder(binding)
             }
+            DataType.HOURLY_FRAGMENT ->{
+                val binding = HourFragmentItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,false
+                )
+                return HourlyFragmentItemHolder(binding)
+            }
             else ->throw IllegalArgumentException("Invalid view type")
        }
     }
@@ -131,6 +200,9 @@ class ChildAdapter(private val ViewType : Int
           DataType.FORECAST_DAY ->{
               ForecastDayList.size
           }
+          DataType.HOURLY_FRAGMENT ->{
+              HourlyFragmentList.size
+          }
           else -> throw IllegalArgumentException("Invalid view type")
       }
     }
@@ -145,7 +217,6 @@ class ChildAdapter(private val ViewType : Int
                 holder.bindCurrentCondition(CurrentConditionList[position])
             }
             is SunMoonHolder ->{
-                println("Binding SunMoon at position $position: ${SunMoonList[position]}")
                 holder.bindSunMoon(SunMoonList[position])
             }
             is ForecastHourHolder ->{
@@ -153,6 +224,9 @@ class ChildAdapter(private val ViewType : Int
             }
             is ForecastDayHolder ->{
                 holder.binForecastDay(ForecastDayList[position])
+            }
+            is HourlyFragmentItemHolder ->{
+                holder.bindHourlyFragmentItem(HourlyFragmentList[position])
             }
         }
 

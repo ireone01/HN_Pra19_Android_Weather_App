@@ -112,6 +112,7 @@ suspend fun fetSunMoon(apiUrl: String ) : List<SunMoon>  = withContext(Dispatche
         }
         return@withContext emptyList<SunMoon>()
 }
+
 suspend fun fetchForecastHour(apiUrl: String): List<ForecastHour> = withContext(Dispatchers.IO) {
         val client = OkHttpClient()
         val request = Request.Builder().url(apiUrl).build()
@@ -137,6 +138,7 @@ suspend fun fetchForecastHour(apiUrl: String): List<ForecastHour> = withContext(
         }
         return@withContext emptyList<ForecastHour>()
 }
+
 suspend fun fetchForecastDay(apiUrl: String): List<ForecastDay> = withContext(Dispatchers.IO) {
         val client = OkHttpClient()
         val request = Request.Builder().url(apiUrl).build()
@@ -169,3 +171,4 @@ suspend fun fetchForecastDay(apiUrl: String): List<ForecastDay> = withContext(Di
         }
         return@withContext emptyList<ForecastDay>()
 }
+

@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_template.databinding.ACurrentConditionBinding
-import java.util.concurrent.RecursiveTask
 
-class MainAdapter(private val weather : List<Data>) :
+class HomeAdapter(private val weather : List<Data>) :
 RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     inner class ACurrentConditionHolder(private val binding : ACurrentConditionBinding):
             RecyclerView.ViewHolder(binding.root){
@@ -62,6 +61,7 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                     is Data.SunMoonData -> DataType.SUN_MOON_TYPE
                     is Data.ForecastHourData ->DataType.FORECAST_HOUR
                     is Data.ForecastDayData -> DataType.FORECAST_DAY
+            else -> throw IllegalArgumentException("Invalid")
         }
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -87,6 +87,7 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                     holder.bindForecastDay(data.forecastDayList)
                 }
             }
+            else -> throw IllegalArgumentException("Invalid")
         }
     }
 

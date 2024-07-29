@@ -7,5 +7,6 @@ class DataType {
         const val SUN_MOON_TYPE = 1
         const val FORECAST_HOUR =2
         const val FORECAST_DAY =3
+        const val HOURLY_FRAGMENT =4
  }
 }

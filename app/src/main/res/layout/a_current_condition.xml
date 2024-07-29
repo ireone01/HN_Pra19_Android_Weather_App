@@ -8,16 +8,17 @@
     android:paddingEnd="30dp"
     android:paddingTop="30dp">
     <TextView
-        android:background="@color/backgrowRcItem"
+        android:background="@color/backgrowColor"
         android:id="@+id/textA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
+        android:paddingBottom="10dp"
         app:layout_constraintTop_toTopOf="parent" />
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/backgrowRcItem"
+        android:background="@color/backgrowColor"
         android:id="@+id/childRecyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
