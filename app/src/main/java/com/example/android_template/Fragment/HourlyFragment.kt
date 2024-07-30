@@ -12,6 +12,12 @@ import com.example.android_template.HourlyFragmentItem
 import com.example.android_template.R
 import com.example.android_template.databinding.ACurrentConditionBinding
 import com.example.android_template.databinding.HourFragmentBinding
+import com.example.android_template.fetchForecastDay
+import com.example.android_template.fetchHourlyFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class HourlyFragment : Fragment(){
     private lateinit var binding: HourFragmentBinding
@@ -39,17 +45,27 @@ class HourlyFragment : Fragment(){
         prepareData()
         val adapter = HourlyAdapter(mList)
         binding.mainRecyclerView.adapter =adapter
+//        LocationKey ="353412"
+//        var Api = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/$LocationKey?apikey=$ApiKey&details=true"
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val hourlyfragment = async { fetchHourlyFragment(Api) }
+//            hourlyfragment.await().let {
+//                mList.add(Data.HourlyFragmentData(it))
+//            }
+//            val adapter = HourlyAdapter(mList)
+//            binding.mainRecyclerView.adapter = adapter
+//        }
     }
     private fun prepareData(){
         val hourly = ArrayList<HourlyFragmentItem>()
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
-        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","3"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
+        hourly.add(HourlyFragmentItem("2024-07-25T05:28:00+07:00","23","45","12","2024-07-25T05:28:00+07:00"))
         mList.add(Data.HourlyFragmentData(hourly))
 
     }

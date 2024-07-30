@@ -154,16 +154,16 @@ suspend fun fetchForecastDay(apiUrl: String): List<ForecastDay> = withContext(Di
                                 for (jsonElement in dailyForecasts) {
                                         val forecastJson = jsonElement.asJsonObject
 
-                                        val dateDay = forecastJson.get("Date")
+                                        val dateDay = forecastJson.get("Date").asString
 
                                         val temperature = forecastJson.getAsJsonObject("Temperature")
-                                        val minTemp = temperature.getAsJsonObject("Minimum")
-                                        val maxTemp = temperature.getAsJsonObject("Maximum")
+                                        val minTemp = temperature.getAsJsonObject("Minimum").get("Value").asFloat
+                                        val maxTemp = temperature.getAsJsonObject("Maximum").get("Value").asFloat
 
                                         val dayJson = forecastJson.getAsJsonObject("Day")
-                                        val precipitationProbability = dayJson?.get("PrecipitationProbability")
+                                        val precipitationProbability = dayJson?.get("PrecipitationProbability")?.asInt ?: 0
 
-                                        forecastList.add(ForecastDay(dateDay.asString, minTemp.asString, maxTemp.asString, precipitationProbability.toString()))
+                                        forecastList.add(ForecastDay(dateDay.toString(), minTemp.toString(), maxTemp.toString(), precipitationProbability.toString()))
                                 }
                                 return@withContext forecastList
                         }
@@ -172,3 +172,31 @@ suspend fun fetchForecastDay(apiUrl: String): List<ForecastDay> = withContext(Di
         return@withContext emptyList<ForecastDay>()
 }
 
+suspend fun fetchHourlyFragment(apiUrl: String): List<HourlyFragmentItem> = withContext(Dispatchers.IO){
+        val client = OkHttpClient()
+        val request = Request.Builder().url(apiUrl).build()
+        val response = client.newCall(request).execute()
+        if(response.isSuccessful){
+                val responseBody = response.body?.string()
+                if(responseBody!=null){
+                        val gson = Gson()
+                        val listHourly =object : TypeToken<List<JsonObject>>() {}.type
+                        val jsonArray: List<JsonObject> = gson.fromJson(responseBody,listHourly)
+                        if(jsonArray.isNotEmpty()){
+                                val hourlyList = mutableListOf<HourlyFragmentItem>()
+                                for(jsonObject in jsonArray){
+                                        val dateTime = jsonObject.get("DateTime").asString
+                                        val t = jsonObject.getAsJsonObject("Temperature")
+                                        val tem = t.get("Value").asString
+                                        val t_rel = jsonObject.getAsJsonObject("RealFeelTemperature")
+                                        val tem_rel = t_rel.get("Value").asString
+                                        val pre = jsonObject.get("PrecipitationProbability").asString
+                                        hourlyList.add(HourlyFragmentItem(dateTime,tem, tem_rel,pre,dateTime))
+                                }
+                                return@withContext hourlyList
+
+                        }
+                }
+        }
+        return@withContext emptyList<HourlyFragmentItem>()
+}

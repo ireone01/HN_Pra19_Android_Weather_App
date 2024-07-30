@@ -11,6 +11,7 @@ import com.example.android_template.calculateDuration.Companion.extractTime
 import com.example.android_template.calculateDuration.Companion.fahrenheitToCelsius
 
 import com.example.android_template.databinding.CurrentConditionBinding
+import com.example.android_template.databinding.DailyFragmentItemBinding
 import com.example.android_template.databinding.ForecastDayBinding
 import com.example.android_template.databinding.ForecastHourBinding
 import com.example.android_template.databinding.HourFragmentBinding
@@ -23,6 +24,7 @@ class ChildAdapter(private val ViewType : Int
                    , private val ForecastHourList : List<ForecastHour> = listOf()
                    , private val ForecastDayList : List<ForecastDay> = listOf()
                     , private val HourlyFragmentList : List<HourlyFragmentItem> = listOf()
+                    , private val DailyFragmentList : List<DailyFragmentItem> = listOf()
 )
     : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -143,6 +145,39 @@ class ChildAdapter(private val ViewType : Int
         }
 
     }
+    inner class DailyFragmentItemHolder(private val binding : DailyFragmentItemBinding):
+        RecyclerView.ViewHolder(binding.root){
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun bindDailyFragmentItem(DailyItem : DailyFragmentItem){
+            when{
+                DailyItem.rain.toInt() < 30 ->{
+                    binding.imgv1.setImageResource(R.drawable.sun)
+                    binding.tv1.text = extractDay(DailyItem.day)
+                    binding.tv4.text = fahrenheitToCelsius(DailyItem.tem_max.toDouble()) + "°C"
+                    binding.tv2.text = fahrenheitToCelsius(DailyItem.tem_min.toDouble()) + "°C"
+                    binding.tv3.text = DailyItem.rain + "%"
+                    binding.imgv2.setImageResource(R.drawable.rain_drop)
+                }
+                (DailyItem.rain.toInt() <50) ->{
+                    binding.imgv1.setImageResource(R.drawable.cloud)
+                    binding.tv1.text = extractDay(DailyItem.day)
+                    binding.tv4.text = fahrenheitToCelsius(DailyItem.tem_max.toDouble()) + "°C"
+                    binding.tv2.text = fahrenheitToCelsius(DailyItem.tem_min.toDouble()) + "°C"
+                    binding.tv3.text = DailyItem.rain + "%"
+                    binding.imgv2.setImageResource(R.drawable.rain_drop)
+                }
+                else -> {
+                    binding.imgv1.setImageResource(R.drawable.rain)
+                    binding.tv1.text = extractDay(DailyItem.day)
+                    binding.tv4.text = fahrenheitToCelsius(DailyItem.tem_max.toDouble()) + "°C"
+                    binding.tv2.text = fahrenheitToCelsius(DailyItem.tem_min.toDouble()) + "°C"
+                    binding.tv3.text = DailyItem.rain + "%"
+                    binding.imgv2.setImageResource(R.drawable.rain_drop)
+                }
+            }
+        }
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return   when(viewType) {
            DataType.CURRENT_CONDITION -> {
@@ -182,6 +217,14 @@ class ChildAdapter(private val ViewType : Int
                 )
                 return HourlyFragmentItemHolder(binding)
             }
+            DataType.DAILY_FRAGMENT -> {
+                val binding = DailyFragmentItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                return DailyFragmentItemHolder(binding)
+            }
             else ->throw IllegalArgumentException("Invalid view type")
        }
     }
@@ -202,6 +245,9 @@ class ChildAdapter(private val ViewType : Int
           }
           DataType.HOURLY_FRAGMENT ->{
               HourlyFragmentList.size
+          }
+          DataType.DAILY_FRAGMENT ->{
+              DailyFragmentList.size
           }
           else -> throw IllegalArgumentException("Invalid view type")
       }
@@ -228,9 +274,13 @@ class ChildAdapter(private val ViewType : Int
             is HourlyFragmentItemHolder ->{
                 holder.bindHourlyFragmentItem(HourlyFragmentList[position])
             }
+            is DailyFragmentItemHolder ->{
+                holder.bindDailyFragmentItem(DailyFragmentList[position])
+            }
         }
 
     }
 
 
 }
+

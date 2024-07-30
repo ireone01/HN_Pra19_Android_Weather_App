@@ -14,7 +14,7 @@ class calculateDuration {
             val format = DateTimeFormatter.ofPattern("HH:mm:ss")
             val start = LocalTime.parse(startTime, format)
             val end = LocalTime.parse(endTime, format)
-            if(SunorMoon =="Sun") {
+            if(SunorMoon =="Sun" || (SunorMoon=="Moon" && !start.isBefore(LocalTime.MIDNIGHT))) {
                 val hour = ChronoUnit.HOURS.between(start, end)
                 val minut = ChronoUnit.MINUTES.between(start, end) % 60
                 return "${hour}h : ${minut}m"

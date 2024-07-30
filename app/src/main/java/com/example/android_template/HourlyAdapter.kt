@@ -1,10 +1,13 @@
 package com.example.android_template
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.example.android_template.calculateDuration.Companion.extractDay
 import com.example.android_template.databinding.ACurrentConditionBinding
 
 class HourlyAdapter(private val weather : List<Data>):
@@ -12,12 +15,17 @@ class HourlyAdapter(private val weather : List<Data>):
             inner class ACurrentConditionHolder(private val binding : ACurrentConditionBinding):
                     RecyclerView.ViewHolder(binding.root){
 
+                        @RequiresApi(Build.VERSION_CODES.O)
                         fun bindHourlyFragment(hourlyList : List<HourlyFragmentItem>){
-                            binding.childRecyclerView.setHasFixedSize(true)
-                            binding.childRecyclerView.layoutManager = LinearLayoutManager(binding.root.context,RecyclerView.VERTICAL,false)
-                            val adapter = ChildAdapter(DataType.HOURLY_FRAGMENT, HourlyFragmentList = hourlyList)
-                            binding.childRecyclerView.adapter = adapter
-                            binding.textA.text = "ngay 39-07"
+                            if (hourlyList.isNotEmpty()) {
+                                binding.childRecyclerView.setHasFixedSize(true)
+                                binding.childRecyclerView.layoutManager = LinearLayoutManager(binding.root.context, RecyclerView.VERTICAL, false)
+                                val adapter = ChildAdapter(DataType.HOURLY_FRAGMENT, HourlyFragmentList = hourlyList)
+                                binding.childRecyclerView.adapter = adapter
+                                binding.textA.text = extractDay(hourlyList[0].day)
+                            } else {
+                                throw IllegalArgumentException("hourlyList is empty")
+                            }
                         }
                     }
 
@@ -37,6 +45,7 @@ class HourlyAdapter(private val weather : List<Data>):
         return DataType.HOURLY_FRAGMENT
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = weather[position]
         when(data) {
@@ -45,7 +54,8 @@ class HourlyAdapter(private val weather : List<Data>):
                     holder.bindHourlyFragment(data.hourlyFragmentList)
                 }
             }
-            else -> throw IllegalArgumentException("Invalid")
+            else -> throw IllegalArgumentException("Invalid data type at position $position: ${data::class.java.simpleName}")
+
         }
     }
 }

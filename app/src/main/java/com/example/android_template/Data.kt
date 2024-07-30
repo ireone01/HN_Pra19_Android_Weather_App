@@ -7,6 +7,7 @@ sealed class Data {
     data class ForecastHourData(val forecastHourList : List<ForecastHour>) : Data()
     data class ForecastDayData(val forecastDayList: List<ForecastDay>) : Data()
     data class HourlyFragmentData(val hourlyFragmentList : List<HourlyFragmentItem>) : Data()
+    data class DailyFragmentData(val dailyFragmentList : List<DailyFragmentItem>) : Data()
 }
 
 data class CurrentCondition(
@@ -39,6 +40,12 @@ data class HourlyFragmentItem(
     val rel_tem : String ,
     val rain : String,
     val day : String
+)
+data class DailyFragmentItem(
+    val day : String,
+    val tem_min : String ,
+    val tem_max : String ,
+    val rain : String
 )
 // SC8yMrpOtTb4IJA2MFxXHzlvrVMAxcNy
 

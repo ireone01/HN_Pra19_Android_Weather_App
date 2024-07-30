@@ -8,5 +8,6 @@ class DataType {
         const val FORECAST_HOUR =2
         const val FORECAST_DAY =3
         const val HOURLY_FRAGMENT =4
+        const val DAILY_FRAGMENT =5
  }
 }

@@ -8,6 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_template.*
 import com.example.android_template.databinding.HomeFragmentBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private lateinit var binding: HomeFragmentBinding
@@ -35,11 +39,13 @@ class HomeFragment : Fragment() {
         prepareData()
         val adapter = HomeAdapter(mList)
         binding.mainRecyclerView.adapter = adapter
+
+
 //        LocationKey ="353412"
 //        var ApiUrl = "https://dataservice.accuweather.com/currentconditions/v1/$LocationKey?apikey=$ApiKey&details=true"
 //        var ApiSunMoon ="https://dataservice.accuweather.com/forecasts/v1/daily/1day/$LocationKey?apikey=$ApiKey&details=true"
 //        var ApiForecast_hour = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/$LocationKey?apikey=$ApiKey&details=true"
-//        var ApiForecast_day ="https://dataservice.accuweather.com/forecasts/v1/daily/5day/$LocationKey?apikey=$ApiKey=true"
+//        var ApiForecast_day ="https://dataservice.accuweather.com/forecasts/v1/daily/5day/$LocationKey?apikey=$ApiKey&details=true"
 //        CoroutineScope(Dispatchers.Main).launch {
 //            val currentCondition =async { fetchWeatherData(ApiUrl) }
 //            val sunMoon  = async { fetSunMoon(ApiSunMoon) }
@@ -57,7 +63,7 @@ class HomeFragment : Fragment() {
 //            forecastDay.await().let {
 //                mList.add(Data.ForecastDayData(it))
 //            }
-//            val adapter = MainAdapter(mList)
+//            val adapter = HomeAdapter(mList)
 //            binding.mainRecyclerView.adapter = adapter
 //        }
     }
