@@ -200,3 +200,35 @@ suspend fun fetchHourlyFragment(apiUrl: String): List<HourlyFragmentItem> = with
         }
         return@withContext emptyList<HourlyFragmentItem>()
 }
+suspend fun fetDailyFragment(apiUrl: String): List<DailyFragmentItem> = withContext(Dispatchers.IO) {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(apiUrl).build()
+        val response = client.newCall(request).execute()
+        if (response.isSuccessful) {
+                val responseBody = response.body?.string()
+                if (responseBody != null) {
+                        val gson = Gson()
+                        val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
+                        val dailyForecasts = jsonObject.getAsJsonArray("DailyForecasts")
+                        if (dailyForecasts != null && dailyForecasts.size() > 0) {
+                                val forecastList = mutableListOf<DailyFragmentItem>()
+                                for (jsonElement in dailyForecasts) {
+                                        val forecastJson = jsonElement.asJsonObject
+
+                                        val dateDay = forecastJson.get("Date").asString
+
+                                        val temperature = forecastJson.getAsJsonObject("Temperature")
+                                        val minTemp = temperature.getAsJsonObject("Minimum").get("Value").asFloat
+                                        val maxTemp = temperature.getAsJsonObject("Maximum").get("Value").asFloat
+
+                                        val dayJson = forecastJson.getAsJsonObject("Day")
+                                        val precipitationProbability = dayJson?.get("PrecipitationProbability")?.asInt ?: 0
+
+                                        forecastList.add(DailyFragmentItem(dateDay.toString(), minTemp.toString(), maxTemp.toString(), precipitationProbability.toString()))
+                                }
+                                return@withContext forecastList
+                        }
+                }
+        }
+        return@withContext emptyList<DailyFragmentItem>()
+}

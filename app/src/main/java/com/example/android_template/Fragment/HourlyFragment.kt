@@ -42,19 +42,19 @@ class HourlyFragment : Fragment(){
         binding.mainRecyclerView.setHasFixedSize(true)
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(context)
         mList = ArrayList()
-        prepareData()
-        val adapter = HourlyAdapter(mList)
-        binding.mainRecyclerView.adapter =adapter
-//        LocationKey ="353412"
-//        var Api = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/$LocationKey?apikey=$ApiKey&details=true"
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val hourlyfragment = async { fetchHourlyFragment(Api) }
-//            hourlyfragment.await().let {
-//                mList.add(Data.HourlyFragmentData(it))
-//            }
-//            val adapter = HourlyAdapter(mList)
-//            binding.mainRecyclerView.adapter = adapter
-//        }
+//        prepareData()
+//        val adapter = HourlyAdapter(mList)
+//        binding.mainRecyclerView.adapter =adapter
+        LocationKey ="353412"
+        var Api = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/$LocationKey?apikey=$ApiKey&details=true"
+        CoroutineScope(Dispatchers.Main).launch {
+            val hourlyfragment = async { fetchHourlyFragment(Api) }
+            hourlyfragment.await().let {
+                mList.add(Data.HourlyFragmentData(it))
+            }
+            val adapter = HourlyAdapter(mList)
+            binding.mainRecyclerView.adapter = adapter
+        }
     }
     private fun prepareData(){
         val hourly = ArrayList<HourlyFragmentItem>()

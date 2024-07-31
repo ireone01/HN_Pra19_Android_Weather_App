@@ -149,7 +149,10 @@ class ChildAdapter(private val ViewType : Int
         RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.O)
         fun bindDailyFragmentItem(DailyItem : DailyFragmentItem){
+            var maxpar = 300
+            var t_par =15
             when{
+
                 DailyItem.rain.toInt() < 30 ->{
                     binding.imgv1.setImageResource(R.drawable.sun)
                     binding.tv1.text = extractDay(DailyItem.day)
@@ -157,6 +160,13 @@ class ChildAdapter(private val ViewType : Int
                     binding.tv2.text = fahrenheitToCelsius(DailyItem.tem_min.toDouble()) + "°C"
                     binding.tv3.text = DailyItem.rain + "%"
                     binding.imgv2.setImageResource(R.drawable.rain_drop)
+
+                    val min = (DailyItem.tem_min.toDouble() / t_par).toDouble()
+                    val max = (DailyItem.tem_max.toDouble() / t_par).toDouble()
+                    val par = binding.view1.layoutParams
+                    par.height = (maxpar*(max - min)).toInt()
+                    binding.view1.layoutParams = par
+
                 }
                 (DailyItem.rain.toInt() <50) ->{
                     binding.imgv1.setImageResource(R.drawable.cloud)
@@ -165,6 +175,12 @@ class ChildAdapter(private val ViewType : Int
                     binding.tv2.text = fahrenheitToCelsius(DailyItem.tem_min.toDouble()) + "°C"
                     binding.tv3.text = DailyItem.rain + "%"
                     binding.imgv2.setImageResource(R.drawable.rain_drop)
+
+                    val min = (DailyItem.tem_min.toDouble() / t_par).toDouble()
+                    val max = (DailyItem.tem_max.toDouble() / t_par).toDouble()
+                    val par = binding.view1.layoutParams
+                    par.height = (maxpar*(max - min)).toInt()
+                    binding.view1.layoutParams = par
                 }
                 else -> {
                     binding.imgv1.setImageResource(R.drawable.rain)
@@ -173,6 +189,12 @@ class ChildAdapter(private val ViewType : Int
                     binding.tv2.text = fahrenheitToCelsius(DailyItem.tem_min.toDouble()) + "°C"
                     binding.tv3.text = DailyItem.rain + "%"
                     binding.imgv2.setImageResource(R.drawable.rain_drop)
+
+                    val min = (DailyItem.tem_min.toDouble() / t_par).toDouble()
+                    val max = (DailyItem.tem_max.toDouble() / t_par).toDouble()
+                    val par = binding.view1.layoutParams
+                    par.height = (maxpar*(max - min)).toInt()
+                    binding.view1.layoutParams = par
                 }
             }
         }
