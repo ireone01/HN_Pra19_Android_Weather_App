@@ -10,5 +10,33 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/backgrowColor"
         app:title="App Toolbar"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvCityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hà Nội , VN"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvTemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8°C"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"/>
+
+
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>

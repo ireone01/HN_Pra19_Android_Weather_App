@@ -8,8 +8,11 @@ sealed class Data {
     data class ForecastDayData(val forecastDayList: List<ForecastDay>) : Data()
     data class HourlyFragmentData(val hourlyFragmentList : List<HourlyFragmentItem>) : Data()
     data class DailyFragmentData(val dailyFragmentList : List<DailyFragmentItem>) : Data()
+    data class LocationData(val locationData : List<Location>) : Data()
 }
-
+data class Location(
+    val name : String
+)
 data class CurrentCondition(
     val Label: String,
     val Value: String,

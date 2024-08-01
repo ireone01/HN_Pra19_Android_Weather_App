@@ -1,6 +1,8 @@
 package com.example.android_template
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android_template.Fragment.HomeFragment
 import com.example.android_template.Fragment.NavigationFragment
@@ -16,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, HomeFragment())
             .commit()
@@ -25,4 +26,5 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.navigation, NavigationFragment())
             .commit()
     }
+
 }
