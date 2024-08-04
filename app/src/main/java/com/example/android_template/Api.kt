@@ -7,12 +7,18 @@ class Api {
         val Apikey2 ="c4ud8M0NJvtijONKtf5tBjidKl2g6wFD"
         val ApiKey = "SC8yMrpOtTb4IJA2MFxXHzlvrVMAxcNy"
         val Apikey3 ="j8aiCZItQzDyTe5Oi28vOUTitlkSjXH6"
+        var isInitialized = false
         var LocationKey ="353412"
             set(value) {
                 field = value
+
                 updateUrls()
                 Log.i("Api_adfssaf", "$LocationKey")
-                onLocationKeyUpdated()
+
+                if (isInitialized ){
+                    onLocationKeyUpdated()
+                }
+                isInitialized = true
             }
 
         var apiUrl: String = ""
